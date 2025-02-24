@@ -5,19 +5,29 @@ import "./App.css";
 import Hammasi from "./Companent/Hammasi";
 import Nav from "./Companent/Nav";
 import Saitbar from "./Companent/Saitbar";
+import LoginPage from "./Produkt/LoginPage";
+import useMyStor from "./my-stor";
 
 function App() {
   const [saitBar, setSetsaitBar] = useState(false);
   const saitbars = () => {
     setSetsaitBar(!saitBar);
   };
+
+  const authState = useMyStor()
   return (
     <>
-        <Nav saitBar={saitBar} saitbars={saitbars} />
-      <div className=" flex container m-auto">
-        <Saitbar saitBar={saitBar} />
-        <Hammasi />
-      </div>
+      {authState.token ? (
+        <>
+          <Nav saitBar={saitBar} saitbars={saitbars} />
+          <div className=" flex container m-auto">
+            <Saitbar saitBar={saitBar} />
+            <Hammasi />
+          </div>
+        </>
+      ) : (
+        <LoginPage />
+      )}
     </>
   );
 }

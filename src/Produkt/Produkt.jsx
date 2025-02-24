@@ -13,8 +13,8 @@ function Produkt() {
   }, []);
   if (!catigoris) {
     return (
-      <div className="m-auto flex justify-center items-center absolute top-0 bottom-0 left-0 right-0">
-        <div className="w-16 h-16 border-4  border-t-transparent rounded-full animate-spin"></div>
+      <div className="m-auto flex justify-center  items-center absolute top-0 bottom-0 left-0 right-0">
+        <div className="w-16 h-16 border-4   border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
