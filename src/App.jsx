@@ -20,7 +20,7 @@ function App() {
       {authState.token ? (
         <>
           <Nav saitBar={saitBar} saitbars={saitbars} />
-          <div className=" flex container m-auto">
+          <div className=" flex ">
             <Saitbar saitBar={saitBar} />
             <Hammasi />
           </div>

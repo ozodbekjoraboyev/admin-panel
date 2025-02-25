@@ -25,6 +25,7 @@ function LoginPage() {
                   user: res.data.user,
                 });
                 setloading(false);
+            localStorage.setItem("auth", JSON.stringify(res.data))
               })
               .catch((e) => {
                 console.error(e);
