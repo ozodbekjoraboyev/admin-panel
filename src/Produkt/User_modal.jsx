@@ -24,7 +24,7 @@ function UserModal({ozgarish}) {
           layout="vertical"
           onFinish={(values) => {
             console.log(values);
-            setloading(true); // Loadingni yoqish
+            setloading(true); 
             axios
               .post(
                 `https://library.softly.uz/api/users`,
@@ -38,7 +38,7 @@ function UserModal({ozgarish}) {
               .then((res) => {
                 console.log(res.data);
                 message.success("Foydalanuvchi muvaffaqiyatli qo‘shildi!");
-                setIsOpenModal(false); // Modalni yopish
+                setIsOpenModal(false); 
                 ozgarish?.()
               })
               .catch((err) => {
