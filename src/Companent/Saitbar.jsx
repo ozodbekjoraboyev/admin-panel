@@ -55,6 +55,8 @@ import {
     FolderOpenOutlined,
     HomeOutlined,
     ProductOutlined,
+    ReconciliationFilled,
+    UserOutlined,
   } from "@ant-design/icons";
   import { Menu } from "antd";
   import { Link } from "react-router-dom"; 
@@ -79,6 +81,14 @@ import {
         key: "/kategores",
         label: <Link to={"/kategores"}> Kategorya</Link>,
         icon: <FolderOpenOutlined />,
+      },{
+        key: "/ijaralar",
+        label: <Link to={"/ijaralar"}> Ijaralar</Link>,
+        icon: <ReconciliationFilled />,
+      },{
+        key: "/userpeg",
+        label: <Link to={"/userpeg"}> userPeg</Link>,
+        icon: <UserOutlined />,
       },
     ];
   

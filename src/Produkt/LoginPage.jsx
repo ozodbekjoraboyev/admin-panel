@@ -5,6 +5,7 @@ import axios from "axios";
 import { data } from "react-router-dom";
 import useMyStor from "../my-stor";
 import { use } from "react";
+import UserPeg from "./UserPeg";
 function LoginPage() {
   const [loading, setloading] = useState(false);
 
@@ -43,6 +44,7 @@ function LoginPage() {
               },
             ]}
           >
+    
             <Input />
           </Form.Item>
 

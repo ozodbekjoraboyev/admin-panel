@@ -10,7 +10,6 @@ import useMyStor from "../my-stor";
 
 function Nav({ saitBar, saitBars }) {
   const state = useMyStor();
-  console.log(state);
 
   return (
     <div className="">
@@ -52,7 +51,7 @@ function Nav({ saitBar, saitBars }) {
             </div>
             <div>
               <div>
-                {state.user.firstName} {state.user.lastName}{" "}
+                {state.user.firstName} {state.user.lastName}
               </div>
               <div className=" text-blue-600"> @{state.user.username}</div>
             </div>
