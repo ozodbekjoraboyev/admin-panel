@@ -2,8 +2,8 @@ import { CopyOutlined } from "@ant-design/icons";
 import { message, Switch, Table } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import useMyStor from "../my-stor";
-import UserPeg from "./UserPeg";
+import useMyStor from "../../my-stor";
+import UserPeg from "../Kitobxonlar/UserPeg";
 
 function Ijaralar() {
   const [ijara, setIjara] = useState();

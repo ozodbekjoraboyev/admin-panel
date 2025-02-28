@@ -14,7 +14,10 @@ function Nav({ saitBar, saitBars }) {
   return (
     <div className="">
       <nav className=" bg-black p-3  flex justify-between">
-        <p className=" text-4xl text-white">Logo</p>
+        <div className=" text-4xl text-white">
+          
+          <img src="https://admin.mehrkutubxonasi.uz/img/logo.png" alt="" />
+        </div>
 
         <Dropdown
           menu={{

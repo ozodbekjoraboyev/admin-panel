@@ -1,10 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "../Produkt/Home";
-import Categori from "../Produkt/Categori";
-import Produkt from "../Produkt/Produkt";
-import Ijaralar from "../Produkt/Ijaralar";
-import UserPeg from "../Produkt/UserPeg";
+import Home from "../Produkt/Home/Home";
+import Categori from "../Produkt/Catigores/Categori";
+import Produkt from "../Produkt/Produkt/Produkt";
+import Ijaralar from "../Produkt/Ijaralar/Ijaralar";
+import UserPeg from "../Produkt/Kitobxonlar/UserPeg";
+import EditUser from "../Produkt/EditUser/EditUser";
+import Kitoblarim from "../Produkt/kitoblarim/Kitoblarim";
 
 function Hammasi() {
   return (
@@ -16,6 +18,8 @@ function Hammasi() {
         <Route path="/kategores" element={<Produkt />} />
         <Route path="/ijaralar" element={<Ijaralar />} />
         <Route path="/userpeg" element={<UserPeg />} />
+        <Route path="/edituser" element={<EditUser />} />
+        <Route path="/Kitoblarim" element={<Kitoblarim />} />
       </Routes>
     </div>
   );

@@ -20,7 +20,8 @@ function Produkt() {
   }
   return (
     <div className=" w-full">
-      <Table  className=" w-full"
+      <Table
+        className=" w-full"
         dataSource={catigoris}
         columns={[
           {

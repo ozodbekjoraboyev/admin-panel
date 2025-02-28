@@ -3,16 +3,22 @@ import { Button, Card, Form, Input, message } from "antd";
 import React, { useState } from "react";
 import axios from "axios";
 import { data } from "react-router-dom";
-import useMyStor from "../my-stor";
+import useMyStor from "../../my-stor";
 import { use } from "react";
-import UserPeg from "./UserPeg";
+import UserPeg from "../Kitobxonlar/UserPeg";
+import Password from "antd/es/input/Password";
 function LoginPage() {
   const [loading, setloading] = useState(false);
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <Card className=" shadow-blue-600 shadow-2xl w-[400px]  ">
+      <Card className=" w-[400px]  ">
         <Form
+          layout="vertical"
+          initialValues={{
+            username: "lib2",
+            password: "lib22",
+          }}
           onFinish={(valus) => {
             console.log(valus);
 
@@ -26,7 +32,7 @@ function LoginPage() {
                   user: res.data.user,
                 });
                 setloading(false);
-            localStorage.setItem("auth", JSON.stringify(res.data))
+                localStorage.setItem("auth", JSON.stringify(res.data));
               })
               .catch((e) => {
                 console.error(e);
@@ -44,7 +50,6 @@ function LoginPage() {
               },
             ]}
           >
-    
             <Input />
           </Form.Item>
 

@@ -1,33 +1,30 @@
 import { Button, Drawer, Form, Input, InputNumber, message, Radio } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import useMyStor from "../my-stor";
+import useMyStor from "../../my-stor";
 
-function UserModal({ozgarish}) {
-  const [isOpenModal, setIsOpenModal] = useState(false);
+function EditUser({ ozgarish, user, setuser, kutbhona, setkutbhona }) {
   const [loading, setloading] = useState(false);
 
   const state = useMyStor();
 
   return (
     <div>
-      <Button type="primary" onClick={() => setIsOpenModal(true)}>
-        + Qo'shish
-      </Button>
-
       <Drawer
-        title="Kitobxon qo'shish"
-        open={isOpenModal}
-        onClose={() => setIsOpenModal(false)}
+        title="Kitobxon o'zgartrish"
+        open={user ? true : false}
+        onClose={() => setuser(null)}
+        destroyOnClose
       >
         <Form
+          initialValues={user}
           layout="vertical"
           onFinish={(values) => {
             console.log(values);
-            setloading(true); 
+            setloading(true);
             axios
-              .post(
-                `https://library.softly.uz/api/users`,
+              .put(
+                `https://library.softly.uz/api/users/${user.id}`,
                 { ...values, phone: values.phone.toString() },
                 {
                   headers: {
@@ -38,18 +35,17 @@ function UserModal({ozgarish}) {
               .then((res) => {
                 console.log(res.data);
                 message.success("Foydalanuvchi muvaffaqiyatli qo‘shildi!");
-                setIsOpenModal(false); 
-                ozgarish?.()
+                setuser(null);
+                ozgarish?.();
               })
               .catch((err) => {
                 console.error(err);
                 message.error("Xatolik yuz berdi!");
-              }).finally(()=>{
-                setloading(false)
               })
-             
+              .finally(() => {
+                setloading(false);
+              });
           }}
-          
         >
           <Form.Item
             label="Ism"
@@ -98,14 +94,14 @@ function UserModal({ozgarish}) {
           </Form.Item>
           <Form.Item>
             <Button
-            loading={loading}
+              loading={loading}
               onClick={() => {
                 setIsOpenModal(false);
               }}
               type="primary"
               htmlType="submit"
             >
-             {loading? "Jonatilmoqda": "+ qoshish"}
+              {loading ? "Jonatilmoqda" : "+ O'zgartrish"}
             </Button>
           </Form.Item>
         </Form>
@@ -114,4 +110,4 @@ function UserModal({ozgarish}) {
   );
 }
 
-export default UserModal;
+export default EditUser;

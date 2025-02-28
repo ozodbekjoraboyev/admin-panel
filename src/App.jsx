@@ -5,7 +5,7 @@ import "./App.css";
 import Hammasi from "./Companent/Hammasi";
 import Nav from "./Companent/Nav";
 import Saitbar from "./Companent/Saitbar";
-import LoginPage from "./Produkt/LoginPage";
+import LoginPage from "./Produkt/LoginPage/LoginPage";
 import useMyStor from "./my-stor";
 
 function App() {
