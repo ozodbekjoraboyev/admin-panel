@@ -4,32 +4,37 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useMyStor from "../../my-stor";
 import UserPeg from "../Kitobxonlar/UserPeg";
+import api from "../../api/api";
+import IjaralarEdit from "./IjaralarEdit";
 
 function Ijaralar() {
   const [ijara, setIjara] = useState();
   const state = useMyStor();
+
   useEffect(() => {
-    axios
-      .get(`https://library.softly.uz/api/rents`, {
+    api
+      .get(`/api/rents`, {
         params: {
           size: 20,
           page: 1,
         },
-        headers: {
-          authorization: `Bearer ${state.token}`,
-        },
       })
+
       .then((res) => {
-        console.log(res.data.items);
         setIjara(res.data.items);
       })
+
       .catch((e) => {
         console.error(e);
       });
   }, []);
   return (
     <div className=" w-full ">
-                <p className=" text-2xl font-bold bg-blue-300 rounded p-2 pl-5">Ijaralar</p>
+      <div className=" flex justify-between">
+        <p className=" text-2xl font-bold  rounded p-2 pl-5">Ijaralar</p>
+
+        <IjaralarEdit />
+      </div>
       <Table
         className=" w-full"
         dataSource={ijara}

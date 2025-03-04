@@ -7,9 +7,9 @@ import useMyStor from "../../my-stor";
 import { use } from "react";
 import UserPeg from "../Kitobxonlar/UserPeg";
 import Password from "antd/es/input/Password";
+import api from "../../api/api";
 function LoginPage() {
   const [loading, setloading] = useState(false);
-
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className=" w-[400px]  ">
@@ -23,9 +23,12 @@ function LoginPage() {
             console.log(valus);
 
             setloading(true);
-            axios
-              .post("https://library.softly.uz/auth/signin", valus)
+            api
+              .post("/auth/signin", valus)
               .then((res) => {
+
+                api.defaults.headers.Authorization = `Bearer ${res.data.token}`;
+
                 console.log(res.data);
                 useMyStor.setState({
                   token: res.data.token,

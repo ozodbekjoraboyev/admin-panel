@@ -2,8 +2,9 @@ import { Button, Drawer, Form, Input, InputNumber, message, Radio } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useMyStor from "../../my-stor";
+import api from "../../api/api";
 
-function EditUser({ ozgarish, user, setuser, kutbhona, setkutbhona }) {
+function EditUser({ ozgarish, user, setuser,  }) {
   const [loading, setloading] = useState(false);
 
   const state = useMyStor();
@@ -22,14 +23,12 @@ function EditUser({ ozgarish, user, setuser, kutbhona, setkutbhona }) {
           onFinish={(values) => {
             console.log(values);
             setloading(true);
-            axios
+            api
               .put(
-                `https://library.softly.uz/api/users/${user.id}`,
+                `/api/users/${user.id}`,
                 { ...values, phone: values.phone.toString() },
                 {
-                  headers: {
-                    authorization: `Bearer ${state.token}`,
-                  },
+               
                 }
               )
               .then((res) => {

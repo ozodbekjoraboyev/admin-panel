@@ -2,6 +2,7 @@ import { Button, Drawer, Form, Input, InputNumber, message, Radio } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useMyStor from "../../my-stor";
+import api from "../../api/api";
 
 function UserModal({ozgarish}) {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -16,7 +17,7 @@ function UserModal({ozgarish}) {
       </Button>
 
       <Drawer
-        title="Kitobxon qo'shish"
+        title="Kitobxon qouytreyuihkjl'shish"
         open={isOpenModal}
         onClose={() => setIsOpenModal(false)}
         destroyOnClose
@@ -26,9 +27,9 @@ function UserModal({ozgarish}) {
           onFinish={(values) => {
             console.log(values);
             setloading(true); 
-            axios
+            api
               .post(
-                `https://library.softly.uz/api/users`,
+                `/api/users`,
                 { ...values, phone: values.phone.toString() },
                 {
                   headers: {

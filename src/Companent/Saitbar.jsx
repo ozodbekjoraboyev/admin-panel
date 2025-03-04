@@ -53,6 +53,7 @@
 // export default Saitbar;
 import {
   BoldOutlined,
+  BookOutlined,
   FolderOpenOutlined,
   HomeOutlined,
   ProductOutlined,
@@ -99,11 +100,7 @@ function Saitbar({ Saitbar }) {
       label: <Link to={"/userpeg"}>Kitobxonlar</Link>,
       icon: <BoldOutlined />,
     },
-    {
-      key: "/edituser",
-      label: <Link to={"/edituser"}> EditUser</Link>,
-      icon: <UserAddOutlined />,
-    },
+
   ];
 
   return (

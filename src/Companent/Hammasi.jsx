@@ -13,12 +13,11 @@ function Hammasi() {
     <div className="flex w-full">
 
       <Routes>
+        <Route path="/ijaralar" element={<Ijaralar />} />
         <Route path="/" element={<Home />} />
         <Route path="/mahsulotlar" element={<Categori />} />
         <Route path="/kategores" element={<Produkt />} />
-        <Route path="/ijaralar" element={<Ijaralar />} />
         <Route path="/userpeg" element={<UserPeg />} />
-        <Route path="/edituser" element={<EditUser />} />
         <Route path="/Kitoblarim" element={<Kitoblarim />} />
       </Routes>
     </div>

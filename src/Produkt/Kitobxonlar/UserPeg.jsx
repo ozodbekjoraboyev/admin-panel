@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import useMyStor from "../../my-stor";
 import User_modal from "./User_modal";
 import EditUser from "../EditUser/EditUser";
+import api from "../../api/api";
 
 function UserPeg() {
   const [kutbhona, setkutbhona] = useState();
@@ -13,15 +14,13 @@ function UserPeg() {
   const [user, setuser] = useState();
 
   const nomlash = () => {
-    axios
-      .get(`https://library.softly.uz/api/users`, {
+    api
+      .get(`/api/users`, {
         params: {
           size: pegsSiaze,
           page: currenPage,
         },
-        headers: {
-          authorization: `Bearer ${state.token}`,
-        },
+  
       })
       .then((res) => {
         console.log(res.data);
@@ -38,9 +37,9 @@ function UserPeg() {
 
   if (!kutbhona) {
     return (
-      <>
-        <Spin />
-      </>
+      <div className="m-auto flex justify-center  items-center absolute top-0 bottom-0 left-0 right-0">
+      <div className="w-16 h-16 border-4   border-t-transparent rounded-full animate-spin"></div>
+    </div>
     );
   }
   return (

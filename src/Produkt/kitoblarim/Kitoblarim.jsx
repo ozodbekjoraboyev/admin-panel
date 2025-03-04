@@ -9,27 +9,26 @@ import {
   SafetyCertificateOutlined,
   SafetyCertificateTwoTone,
 } from "@ant-design/icons";
-import Stoks from "./Stoks";
+import KitobQoshish from "./Stoks";
+import api from "../../api/api";
 
 function Kitoblarim() {
   const [kitoblarim, setkitoblarim] = useState();
   const [currenPage, setCurrenPage] = useState(1);
   const pegsSiaze = 10;
   const state = useMyStor();
- 
+
   const nomlash = () => {
-    axios
-      .get(`https://library.softly.uz/api/stocks`, {
+    api
+      .get(`/api/stocks`, {
         params: {
           size: pegsSiaze,
           page: currenPage,
         },
-        headers: {
-          authorization: `Bearer ${state.token}`,
-        },
+      
       })
       .then((res) => {
-        console.log(res.data);
+       
         setkitoblarim(res.data);
       })
       .catch((e) => {
@@ -43,16 +42,16 @@ function Kitoblarim() {
 
   if (!kitoblarim) {
     return (
-      <>
-        <Spin />
-      </>
+      <div className="m-auto flex justify-center  items-center absolute top-0 bottom-0 left-0 right-0">
+      <div className="w-16 h-16 border-4   border-t-transparent rounded-full animate-spin"></div>
+    </div>
     );
   }
   return (
     <div className=" w-full ">
       <div className=" flex  justify-between items-center">
         <p className=" text-2xl font-bold  rounded p-2 pl-5">kitoblarim</p>
-        <Stoks ozgarish={nomlash} />
+        <KitobQoshish ozgarish={nomlash} />
       </div>
 
       <Table

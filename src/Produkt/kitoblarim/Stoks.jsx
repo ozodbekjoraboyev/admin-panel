@@ -12,23 +12,21 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useMyStor from "../../my-stor";
+import api from "../../api/api";
 
-function Stoks({ ozgarish }) {
+function KitobQoshish({ ozgarish }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [loading, setloading] = useState(false);
   const [books, setBooks] = useState();
 
-  
   const state = useMyStor();
   useEffect(() => {
-    axios
-      .get("https://library.softly.uz/api/books", {
-        headers: {
-          authorization: `Bearer ${state.token}`,
-        },
+    api
+      .get("/api/books", {
+   
       })
       .then((res) => {
-        console.log(res.data.items);
+        ozgarish()
         setBooks(res.data.items);
       })
       .catch((err) => {
@@ -37,9 +35,9 @@ function Stoks({ ozgarish }) {
   }, []);
   if (!books) {
     return (
-      <>
-        <Spin />
-      </>
+      <div className="m-auto flex justify-center  items-center absolute top-0 bottom-0 left-0 right-0">
+      <div className="w-16 h-16 border-4   border-t-transparent rounded-full animate-spin"></div>
+    </div>
     );
   }
   return (
@@ -59,15 +57,15 @@ function Stoks({ ozgarish }) {
           onFinish={(values) => {
             console.log(values);
             setloading(true);
-            axios
-              .post(`https://library.softly.uz/api/stocks`, values, {
+            api
+              .post(`/api/stocks`, values, {
                 headers: {
                   authorization: `Bearer ${state.token}`,
                 },
               })
               .then((res) => {
                 console.log(res.data);
-                message.success("Foydalanuvchi muvaffaqiyatli qo‘shildi!");
+                message.success("qo'shildi");
                 setIsOpenModal(false);
                 ozgarish?.();
               })
@@ -87,36 +85,18 @@ function Stoks({ ozgarish }) {
               { required: true, message: "Iltimos, ismingizni kiriting!" },
             ]}
           >
-            <div>
-              <Select
-                showSearch
-                placeholder="Select a person"
-                optionFilterProp="label"
-                options={books.map((item) => {
-                  console.log(item);
-
-                  return { label: item.name, value: item?.id };
-                })}
-              />
-            </div>
-          </Form.Item>
-          <Form.Item
-            label="kitob idsi"
-            name="bookId"
-            rules={[{ required: true, message: "Iltimos, familya kiriting!" }]}
-          >
-            <InputNumber />
+            <Select
+              showSearch
+              placeholder="Select a person"
+              optionFilterProp="label"
+              options={books.map((item) => {
+                return { label: item.name, value: item.id };
+              })}
+            />
           </Form.Item>
 
           <Form.Item>
-            <Button
-              loading={loading}
-              onClick={() => {
-                setIsOpenModal(false);
-              }}
-              type="primary"
-              htmlType="submit"
-            >
+            <Button loading={loading} type="primary" htmlType="submit">
               {loading ? "Jonatilmoqda" : "+ qoshish"}
             </Button>
           </Form.Item>
@@ -126,4 +106,4 @@ function Stoks({ ozgarish }) {
   );
 }
 
-export default Stoks;
+export default KitobQoshish;
