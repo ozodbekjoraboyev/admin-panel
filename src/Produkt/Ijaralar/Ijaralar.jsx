@@ -6,10 +6,12 @@ import useMyStor from "../../my-stor";
 import UserPeg from "../Kitobxonlar/UserPeg";
 import api from "../../api/api";
 import IjaralarEdit from "./IjaralarEdit";
+import ZaxiraKitobKatagi from "../../Companent/ZaxiraKitobKatagi";
 
 function Ijaralar() {
   const [ijara, setIjara] = useState();
   const state = useMyStor();
+  const [book, setBook] = useState();
 
   useEffect(() => {
     api
@@ -22,6 +24,14 @@ function Ijaralar() {
 
       .then((res) => {
         setIjara(res.data.items);
+        const bokS_id = res.data.items.map((item) => {
+          return item.stock.bookId;
+        });
+
+        api.get("/api/books", { params: { id: bokS_id } }).then((res) => {
+          console.log(res.data.items);
+          setBook(res.data.items);
+        });
       })
 
       .catch((e) => {
@@ -36,6 +46,7 @@ function Ijaralar() {
         <IjaralarEdit />
       </div>
       <Table
+      
         className=" w-full"
         dataSource={ijara}
         columns={[
@@ -98,10 +109,14 @@ function Ijaralar() {
             },
           },
           {
-            title: "Zaxira kutbhona",
-            dataIndex: "stockId",
-            key: "id",
+            key: "stock",
+            title: "Zaxira",
+            dataIndex: "stock",
+            render: (stock) => {
+              return <ZaxiraKitobKatagi stock={stock} book={book} />;
+            },
           },
+          
         ]}
       />
     </div>

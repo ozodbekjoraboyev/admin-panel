@@ -9,7 +9,6 @@ import {
   Radio,
   Select,
 } from "antd";
-import axios from "axios";
 import React, { lazy, useEffect, useState } from "react";
 import useMyStor from "../../my-stor";
 import api from "../../api/api";
@@ -25,12 +24,21 @@ function IjaralarEdit({ ozgarish }) {
   const state = useMyStor();
 
   useEffect(() => {
-    api.get(`/api/stocks`).then((res) => {
-      setdata((data) => ({
-        ...data,
-        stocks: res.data.items,
-      }));
-    });
+    api
+      .get(`/api/stocks`, {
+        params: {
+          "filters[busy]": false,
+        },
+      })
+      .then((res) => {
+        setdata((data) => ({
+          ...data,
+          stocks: res.data.items,
+        }));
+
+        console.log(res.data);
+        console.log(data.stocks);
+      });
     api.get(`/api/users`).then((res) => {
       setdata((data) => ({
         ...data,
@@ -55,29 +63,23 @@ function IjaralarEdit({ ozgarish }) {
           layout="vertical"
           onFinish={(values) => {
             console.log(values);
-            // setloading(true);
-            // api
-            //   .post(
-            //     `/api/users`,
-            //     { ...values, phone: values.phone.toString() },
-            //     {
-            //       headers: {
-            //         authorization: `Bearer ${state.token}`,
-            //       },
-            //     }
-            //   )
-            //   .then((res) => {
-            //     console.log(res.data);
-            //     message.success("Foydalanuvchi muvaffaqiyatli qo‘shildi!");
-            //     setIsOpenModal(false);
-            //     ozgarish?.()
-            //   })
-            //   .catch((err) => {
-            //     console.error(err);
-            //     message.error("Xatolik yuz berdi!");
-            //   }).finally(()=>{
-            //     setloading(false)
-            //   })
+            setloading(true);
+            api
+              .post(`/api/rents`, values)
+              .then((res) => {
+                setloading(false);
+                setIsOpenModal(false);
+                console.log(res.data);
+                message.success("Success");
+              })
+              .catch((e) => {
+                console.error(e);
+                setloading(false);
+                message.error(e.response.data.message);
+              })
+              .finally(() => {
+                setloading(false);
+              });
           }}
         >
           <Form.Item
@@ -97,8 +99,8 @@ function IjaralarEdit({ ozgarish }) {
             />
           </Form.Item>
           <Form.Item
-            label="familya"
-            name="lastName"
+            label="kitoblar"
+            name="stockId"
             rules={[{ required: true, message: "Iltimos, familya kiriting!" }]}
           >
             <Select
@@ -148,7 +150,14 @@ function IjaralarEdit({ ozgarish }) {
           </Form.Item>
 
           <Form.Item>
-            <Button loading={loading} type="primary" htmlType="submit">
+            <Button
+              onClick={() => {
+                loading ? setIsOpenModal(false) : "";
+              }}
+              loading={loading}
+              type="primary"
+              htmlType="submit"
+            >
               {loading ? "Jonatilmoqda" : "+ qoshish"}
             </Button>
           </Form.Item>
