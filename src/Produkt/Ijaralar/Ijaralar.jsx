@@ -7,13 +7,17 @@ import UserPeg from "../Kitobxonlar/UserPeg";
 import api from "../../api/api";
 import IjaralarEdit from "./IjaralarEdit";
 import ZaxiraKitobKatagi from "../../Companent/ZaxiraKitobKatagi";
+import IjaralarEdid from "./OzgartrishIjarani";
 
 function Ijaralar() {
   const [ijara, setIjara] = useState();
+  const [loading, setLoading] = useState(false);
   const state = useMyStor();
   const [book, setBook] = useState();
+  const [rens, setrens] = useState();
 
-  useEffect(() => {
+  const ijarsrefresh = () => {
+    setLoading(true);
     api
       .get(`/api/rents`, {
         params: {
@@ -36,29 +40,50 @@ function Ijaralar() {
 
       .catch((e) => {
         console.error(e);
+      })
+      .finally(() => {
+        setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    ijarsrefresh();
   }, []);
+
   return (
     <div className=" w-full ">
       <div className=" flex justify-between">
         <p className=" text-2xl font-bold  rounded p-2 pl-5">Ijaralar</p>
 
-        <IjaralarEdit />
+        <IjaralarEdit refresh={ijarsrefresh} />
       </div>
+      <IjaralarEdid
+        refresh={ijarsrefresh}
+        rens={rens}
+        setrens={setrens}
+        setBook={setBook}
+        book={book}
+      />
       <Table
-      
         className=" w-full"
+        loading={loading}
         dataSource={ijara}
         columns={[
           {
             title: "Id",
             dataIndex: "id",
             key: "id",
-          },
-          {
-            title: "Id",
-            dataIndex: "customId",
-            key: "customId",
+            render: (id, items) => {
+              return (
+                <div
+                  onClick={() => {
+                    setrens(items);
+                  }}
+                >
+                  {id}
+                </div>
+              );
+            },
           },
           {
             title: "Berildi",
@@ -84,12 +109,8 @@ function Ijaralar() {
             title: "Qaytadigan",
             dataIndex: "returnedAt",
             key: "returnedAt",
-            render: (Checkbox) => {
-              if (Checkbox) {
-                return <Switch defaultChecked onChange={Checkbox} />;
-              } else {
-                return <Switch onChange={Checkbox} />;
-              }
+            render: (value) => {
+              return <Switch checked={value ? true : false} />;
             },
           },
 
@@ -116,7 +137,6 @@ function Ijaralar() {
               return <ZaxiraKitobKatagi stock={stock} book={book} />;
             },
           },
-          
         ]}
       />
     </div>

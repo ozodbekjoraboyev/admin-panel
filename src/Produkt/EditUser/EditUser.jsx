@@ -89,14 +89,17 @@ function EditUser({ ozgarish, user, setuser,  }) {
               ]}
               optionType="button"
               buttonStyle="solid"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
             />
           </Form.Item>
           <Form.Item>
             <Button
               loading={loading}
-              onClick={() => {
-                setIsOpenModal(false);
-              }}
+       
               type="primary"
               htmlType="submit"
             >

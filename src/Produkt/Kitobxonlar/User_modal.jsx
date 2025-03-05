@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import useMyStor from "../../my-stor";
 import api from "../../api/api";
 
-function UserModal({ozgarish}) {
+function UserModal({ ozgarish }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [loading, setloading] = useState(false);
 
@@ -26,7 +26,7 @@ function UserModal({ozgarish}) {
           layout="vertical"
           onFinish={(values) => {
             console.log(values);
-            setloading(true); 
+            setloading(true);
             api
               .post(
                 `/api/users`,
@@ -40,18 +40,17 @@ function UserModal({ozgarish}) {
               .then((res) => {
                 console.log(res.data);
                 message.success("Foydalanuvchi muvaffaqiyatli qo‘shildi!");
-                setIsOpenModal(false); 
-                ozgarish?.()
+                setIsOpenModal(false);
+                ozgarish?.();
               })
               .catch((err) => {
                 console.error(err);
                 message.error("Xatolik yuz berdi!");
-              }).finally(()=>{
-                setloading(false)
               })
-             
+              .finally(() => {
+                setloading(false);
+              });
           }}
-          
         >
           <Form.Item
             label="Ism"
@@ -88,29 +87,24 @@ function UserModal({ozgarish}) {
                 {
                   label: "Erkak",
                   value: "male",
-                  
                 },
                 {
                   label: "Ayol",
                   value: "fimale",
                 },
-                
               ]}
-              
               optionType="button"
               buttonStyle="solid"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
             />
           </Form.Item>
           <Form.Item>
-            <Button
-            loading={loading}
-              onClick={() => {
-                setIsOpenModal(false);
-              }}
-              type="primary"
-              htmlType="submit"
-            >
-             {loading? "Jonatilmoqda": "+ qoshish"}
+            <Button loading={loading} type="primary" htmlType="submit">
+              {loading ? "Jonatilmoqda" : "+ qoshish"}
             </Button>
           </Form.Item>
         </Form>

@@ -13,7 +13,7 @@ import React, { lazy, useEffect, useState } from "react";
 import useMyStor from "../../my-stor";
 import api from "../../api/api";
 
-function IjaralarEdit({ ozgarish }) {
+function IjaralarEdit({ ozgarish, refresh, rens, setrens }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [loading, setloading] = useState(false);
   const [data, setdata] = useState({
@@ -37,7 +37,7 @@ function IjaralarEdit({ ozgarish }) {
         }));
 
         console.log(res.data);
-        console.log(data.stocks);
+        // console.log(data.stocks);
       });
     api.get(`/api/users`).then((res) => {
       setdata((data) => ({
@@ -61,6 +61,7 @@ function IjaralarEdit({ ozgarish }) {
       >
         <Form
           layout="vertical"
+          initialValues={rens}
           onFinish={(values) => {
             console.log(values);
             setloading(true);
@@ -71,6 +72,7 @@ function IjaralarEdit({ ozgarish }) {
                 setIsOpenModal(false);
                 console.log(res.data);
                 message.success("Success");
+                refresh?.();
               })
               .catch((e) => {
                 console.error(e);
@@ -150,14 +152,7 @@ function IjaralarEdit({ ozgarish }) {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              onClick={() => {
-                loading ? setIsOpenModal(false) : "";
-              }}
-              loading={loading}
-              type="primary"
-              htmlType="submit"
-            >
+            <Button loading={loading} type="primary" htmlType="submit">
               {loading ? "Jonatilmoqda" : "+ qoshish"}
             </Button>
           </Form.Item>
